@@ -22,6 +22,5 @@ class Slots_MainWindow(Ui_MainWindow):
 
     # Определяем пользовательский слот
     def show(self):
-        print("Exec")
-        self.Label.setPixmap(QPixmap.fromImage("../image.jpg"))
+        self.Label.setPixmap(QPixmap("./ui/image.jpg"))
         return None

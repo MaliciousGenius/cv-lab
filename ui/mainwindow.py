@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './ui/template/MainWindow.ui'
+# Form implementation generated from reading ui file 'ui/template/MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -21,6 +21,8 @@ class Ui_MainWindow(object):
         self.Show = QtWidgets.QPushButton(self.Workpace)
         self.Show.setGeometry(QtCore.QRect(10, 380, 113, 32))
         self.Show.setObjectName("Show")
+        self.Show.raise_()
+        self.Label.raise_()
         MainWindow.setCentralWidget(self.Workpace)
 
         self.retranslateUi(MainWindow)
