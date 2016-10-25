@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 
 """
@@ -10,8 +10,10 @@
 try:
     from sys import argv, exit
     from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+    from multiprocessing import Queue
     # Импортируем класс со слотами
     from ui.mainwindow_slots import Slots_MainWindow
+    from vision import producer
 except ImportError:
     print("Please install the required packages.")
     exit()
@@ -32,6 +34,8 @@ class MainWindow(Slots_MainWindow):
         return None
 
 if __name__ == '__main__':
+
+    q = Queue()
 
     # Создаём экземпляр приложения
     app = QApplication(argv)
