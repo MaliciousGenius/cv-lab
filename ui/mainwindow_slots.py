@@ -8,6 +8,7 @@
 # Импортируем модули
 try:
     from sys import exit
+    from time import sleep
 #    from cv2 import imread, cvtColor, COLOR_BGR2RGB
     from PyQt5.QtGui import QPixmap, QImage
     from PyQt5.QtWidgets import QLabel
@@ -24,3 +25,17 @@ class Slots_MainWindow(Ui_MainWindow):
     def show(self):
         self.Label.setPixmap(QPixmap("./ui/image.jpg"))
         return None
+
+
+    def update_frame(self, q):
+        sleep(5)
+        if not q.empty():
+            frame = q.get()
+            img = frame["img"]
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            height, width, bpc = img.shape
+            bpl = bpc * width
+            image = QImage(img.data, width, height, bpl, QImage.Format_RGB888)
+            self.Label.setPixmap(QPixmap(image))
+            return None
+

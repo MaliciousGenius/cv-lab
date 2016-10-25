@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/template/MainWindow.ui'
+# Form implementation generated from reading ui file './ui/template/MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -23,6 +23,9 @@ class Ui_MainWindow(object):
         self.Show.setObjectName("Show")
         self.Show.raise_()
         self.Label.raise_()
+        # Таймер
+        self.Timer = QtCore.QTimer(self.Workpace)
+        self.Timer.start(1)
         MainWindow.setCentralWidget(self.Workpace)
 
         self.retranslateUi(MainWindow)

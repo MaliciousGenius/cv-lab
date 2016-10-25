@@ -7,7 +7,7 @@
 # Импортируем модули
 try:
     from sys import exit
-    from multiprocessing import Process
+    from multiprocessing import Queue
     from queue import Queue
 except ImportError:
     print("Please install the required packages.")

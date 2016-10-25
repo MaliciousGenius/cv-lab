@@ -8,9 +8,9 @@
 try:
     from sys import exit
     from time import sleep
-    from multiprocessing import Process
+    from multiprocessing import Process, Queue
     from cv2 import VideoCapture
-    from queue import Queue
+#    from queue import Queue
 except ImportError:
     print("Please install the required packages.")
     exit()
@@ -29,11 +29,8 @@ def ProducerWorker(queue):
         _, frame = capture.read()
 
         # Запись в фрейма в очередь
-        if queue.qsize() < 64:
-            queue.put(frame)
-        else:
-            print("Очередь заполнена")
-            sleep(10)
+        queue.put(frame)
+
 
 if __name__ == '__main__':
     q = Queue()

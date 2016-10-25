@@ -9,14 +9,33 @@
 # Импортируем модули
 try:
     from sys import argv, exit
+    from threading import Thread
+    from queue import Queue
+#    from PyQt5.QtCore import QTimer
     from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
-    from multiprocessing import Queue
+    from cv2 import VideoCapture, CAP_PROP_FRAME_WIDTH, CAP_PROP_FRAME_HEIGHT
     # Импортируем класс со слотами
     from ui.mainwindow_slots import Slots_MainWindow
-    from vision import producer
 except ImportError:
     print("Please install the required packages.")
     exit()
+
+global q
+q = Queue()
+
+# Граббер камеры
+def grab(cam, queue, width, height):
+    global running
+    capture = VideoCapture(cam)
+    capture.set(CAP_PROP_FRAME_WIDTH, width)
+    capture.set(CAP_PROP_FRAME_HEIGHT, height)
+
+    while(running):
+        frame = {}
+        capture.grab()
+        retval, img = capture.retrieve(0)
+        frame["img"] = img
+        queue.put(frame)
 
 # Создаём класс основного окна, наследуясь от класса со слотами.
 class MainWindow(Slots_MainWindow):
@@ -31,11 +50,12 @@ class MainWindow(Slots_MainWindow):
     # Подключаем слоты к виджетам
     def connect_slots(self):
         self.Show.clicked.connect(self.show)
+        self.Timer.timeout.connect(self.update_frame(q))
         return None
 
 if __name__ == '__main__':
 
-    q = Queue()
+    capture_thread = Thread(target=grab, args=(0, q, 640, 360))
 
     # Создаём экземпляр приложения
     app = QApplication(argv)

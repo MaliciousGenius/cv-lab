@@ -8,9 +8,9 @@
 try:
     from sys import exit
     from time import sleep
-    from multiprocessing import Process
+    from multiprocessing import Process, Queue
     from cv2 import imshow, waitKey
-    from queue import Queue
+#    from queue import Queue
 except ImportError:
     print("Please install the required packages.")
     exit()
@@ -30,6 +30,6 @@ def ConsumerWorker(queue):
 if __name__ == '__main__':
     q = Queue()
 
-    consumer = Process(target=ConsumerThread, args=(q,))
+    consumer = Process(target=ConsumerWorker, args=(q,))
     consumer.start()
     consumer.join()
